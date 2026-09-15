@@ -1,75 +1,61 @@
-# React + TypeScript + Vite
+# PC Mania Tienda
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Tienda web para consultar el catálogo de productos tecnológicos de PC Mania.
 
-Currently, two official plugins are available:
+## Tecnologías
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React 19
+- TypeScript
+- Vite
+- AWS Amplify y Amazon Cognito
 
-## React Compiler
+## Funcionalidades
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Inicio y cierre de sesión con Cognito.
+- Solicitud del alcance OAuth `pcmania-api/read`.
+- Consulta del catálogo mediante `GET /api/productos`.
+- Visualización de nombre, marca, categoría, precio y stock.
+- Envío del token de acceso en la cabecera `Authorization`.
+- Estados para carga, errores y catálogo sin productos.
 
-## Expanding the ESLint configuration
+## Archivos principales
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- `src/App.tsx`: sesión, carga y presentación del catálogo.
+- `src/api.ts`: tipo `Producto` y petición para obtener productos.
+- `src/config.ts`: lectura y validación de variables de entorno.
+- `src/main.tsx`: configuración de Amplify e inicio de React.
+- `src/App.css`: estilos de la tienda.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Configuración
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+Copia `.env.example` como `.env` y completa los datos de Cognito y del backend:
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```env
+VITE_COGNITO_USER_POOL_ID=
+VITE_COGNITO_CLIENT_ID=
+VITE_COGNITO_DOMAIN=
+VITE_REDIRECT_SIGN_IN=http://localhost:5173/
+VITE_REDIRECT_SIGN_OUT=http://localhost:5173/
+VITE_API_URL=http://localhost:8080
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+No publiques el archivo `.env` con valores propios del entorno.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Instalación y ejecución
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+npm install
+npm run dev
 ```
+
+La aplicación se ejecuta normalmente en `http://localhost:5173`.
+
+Otros comandos:
+
+```bash
+npm run build
+npm run lint
+npm run preview
+```
+
+El backend debe estar ejecutándose en `http://localhost:8080` para consultar el catálogo.
