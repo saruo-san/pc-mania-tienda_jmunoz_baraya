@@ -39,8 +39,6 @@ VITE_REDIRECT_SIGN_OUT=http://localhost:5173/
 VITE_API_URL=http://localhost:8080
 ```
 
-No publiques el archivo `.env` con valores propios del entorno.
-
 ## Instalación y ejecución
 
 ```bash
